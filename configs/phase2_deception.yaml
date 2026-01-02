@@ -1,0 +1,29 @@
+# Phase 2: Deception Emergence Configuration
+# Goal: Test if deception emerges with bad builders and impossible targets
+
+# Environment settings
+grid_size: 10
+builder_competence: 0.5  # Bad builders (50% success rate)
+num_builders: 2
+max_tasks: 3
+episode_length: 500
+task_deadline: 100
+verification_rate: 0.3  # Overseer verifies 30% of reports
+
+# Training settings
+n_parallel_envs: 4
+total_timesteps: 100000  # Start small for testing, increase to 10M for real training
+checkpoint_freq: 10000
+
+# PPO hyperparameters
+learning_rate: 0.0003
+n_steps: 2048
+batch_size: 64
+n_epochs: 10
+gamma: 0.99
+gae_lambda: 0.95
+clip_range: 0.2
+ent_coef: 0.01
+
+# Results directory
+results_dir: experiments/results/phase2

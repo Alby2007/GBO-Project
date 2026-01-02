@@ -1,0 +1,30 @@
+# Phase 1: Full 5M Step Baseline Training - GPU Optimized
+# Target: RTX 5090 or similar high-end GPU
+# Expected runtime: 2-4 hours on RTX 5090
+
+# Environment settings
+grid_size: 10
+builder_competence: 0.9  # Good builders (90% success rate)
+num_builders: 2
+max_tasks: 3
+episode_length: 500
+task_deadline: 100
+verification_rate: 0.3  # Overseer verifies 30% of reports
+
+# Training settings - GPU optimized
+n_parallel_envs: 16  # Increased for GPU parallelization
+total_timesteps: 5000000  # 5 million steps
+checkpoint_freq: 100000  # Save every 100k steps (50 checkpoints total)
+
+# PPO hyperparameters - GPU optimized
+learning_rate: 0.0003
+n_steps: 2048  # Steps per env before update
+batch_size: 256  # Larger batch size for GPU efficiency
+n_epochs: 10
+gamma: 0.99
+gae_lambda: 0.95
+clip_range: 0.2
+ent_coef: 0.01  # Entropy coefficient for exploration
+
+# Results directory
+results_dir: experiments/results/phase1_5M_baseline
