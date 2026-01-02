@@ -46,12 +46,28 @@ def train_phase1_baseline(config: dict, resume_from: str = None):
     print("PHASE 1: Baseline Training (Good Builders)")
     print("=" * 60)
     
-    if torch.cuda.is_available():
-        print(f"\nGPU: {torch.cuda.get_device_name(0)}")
+    # Check GPU compatibility
+    gpu_available = torch.cuda.is_available()
+    use_gpu = False
+    
+    if gpu_available:
+        gpu_name = torch.cuda.get_device_name(0)
+        print(f"\nGPU Detected: {gpu_name}")
         print(f"CUDA Version: {torch.version.cuda}")
         print(f"PyTorch Version: {torch.__version__}")
+        
+        # RTX 5090 has sm_120 which is not yet supported by PyTorch
+        if "5090" in gpu_name or "5080" in gpu_name:
+            print(f"\nWARNING: {gpu_name} (sm_120) is not yet supported by PyTorch.")
+            print("PyTorch currently supports up to sm_90 (RTX 4090, H100).")
+            print("Falling back to CPU training.")
+            print("For GPU support, wait for PyTorch 2.6+ or use an older GPU.")
+            use_gpu = False
+        else:
+            use_gpu = True
+            print(f"✓ GPU is compatible and will be used for training")
     else:
-        print("\nWARNING: No GPU detected! Training will be slow on CPU.")
+        print("\nNo GPU detected! Training will use CPU.")
     
     env_kwargs = {
         'grid_size': config.get('grid_size', 10),
@@ -89,7 +105,7 @@ def train_phase1_baseline(config: dict, resume_from: str = None):
         if resume_from:
             print(f"\nWARNING: Checkpoint not found at {resume_from}. Starting fresh training.")
         
-        device = 'cuda' if torch.cuda.is_available() else 'cpu'
+        device = 'cuda' if use_gpu else 'cpu'
         print(f"\nInitializing PPO model on device: {device}")
         
         model = PPO(
