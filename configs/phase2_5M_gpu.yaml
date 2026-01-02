@@ -1,0 +1,30 @@
+# Phase 2: Deception Emergence Training - GPU Optimized
+# Target: RTX 4090 or similar high-end GPU
+# Expected runtime: 2-4 hours
+
+# Environment settings
+grid_size: 10
+builder_competence: 0.5  # BAD builders (50% success rate) - key difference from Phase 1
+num_builders: 2
+max_tasks: 3
+episode_length: 500
+task_deadline: 100
+verification_rate: 0.3  # Overseer verifies 30% of reports
+
+# Training settings - GPU optimized
+n_parallel_envs: 16  # Increased for GPU parallelization
+total_timesteps: 5000000  # 5 million steps
+checkpoint_freq: 100000  # Save every 100k steps (50 checkpoints total)
+
+# PPO hyperparameters - GPU optimized
+learning_rate: 0.0003
+n_steps: 2048  # Steps per env before update
+batch_size: 256  # Larger batch size for GPU efficiency
+n_epochs: 10
+gamma: 0.99
+gae_lambda: 0.95
+clip_range: 0.2
+ent_coef: 0.01  # Entropy coefficient for exploration
+
+# Results directory
+results_dir: experiments/results/phase2_5M_deception
