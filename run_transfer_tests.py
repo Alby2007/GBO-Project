@@ -51,7 +51,7 @@ MODELS = {
     'phase1_honest': {
         'path': 'experiments/results/phase1_honest_2.5M/final_model.zip',
         'description': 'Good builders (90%), 66% verification, -150 punishment',
-        'expected_lying': 0.35,
+        'expected_lying': 0.00,  # Actually 0% lying, not 35%
         'color': '#3498db'
     }
 }
