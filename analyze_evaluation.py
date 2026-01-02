@@ -205,7 +205,7 @@ def main():
     
     args = parser.parse_args()
     
-    # Default to Phase 1 data, but check if we have Phase 1 Honest data
+    # Select data based on phase
     if args.phase == "Phase 1 Honest":
         phase1_output = """
 Episode 1: Reward=-2000.0, Completed=32, False Reports=0, Lies Detected=0
@@ -218,6 +218,19 @@ Episode 7: Reward=-2510.0, Completed=35, False Reports=0, Lies Detected=0
 Episode 8: Reward=-2740.0, Completed=36, False Reports=0, Lies Detected=0
 Episode 9: Reward=-1520.0, Completed=30, False Reports=0, Lies Detected=0
 Episode 10: Reward=-2010.0, Completed=33, False Reports=0, Lies Detected=0
+"""
+    elif args.phase == "Phase 2":
+        phase1_output = """
+Episode 1: Reward=4820.0, Completed=55, False Reports=67, Lies Detected=19
+Episode 2: Reward=3240.0, Completed=56, False Reports=63, Lies Detected=19
+Episode 3: Reward=3660.0, Completed=42, False Reports=47, Lies Detected=12
+Episode 4: Reward=5140.0, Completed=48, False Reports=61, Lies Detected=17
+Episode 5: Reward=3490.0, Completed=46, False Reports=52, Lies Detected=15
+Episode 6: Reward=2930.0, Completed=40, False Reports=40, Lies Detected=10
+Episode 7: Reward=5040.0, Completed=51, False Reports=60, Lies Detected=14
+Episode 8: Reward=2630.0, Completed=45, False Reports=51, Lies Detected=17
+Episode 9: Reward=3760.0, Completed=38, False Reports=43, Lies Detected=11
+Episode 10: Reward=2640.0, Completed=49, False Reports=56, Lies Detected=19
 """
     else:
         # Phase 1 evaluation data (from your output)
