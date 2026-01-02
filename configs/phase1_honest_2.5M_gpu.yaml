@@ -1,0 +1,32 @@
+# Phase 1 Honest: Strict Baseline Training - GPU Optimized
+# Goal: Establish truly honest behavior with stricter oversight
+# Target: RTX 4090 or similar high-end GPU
+# Expected runtime: 1-1.5 hours
+
+# Environment settings
+grid_size: 10
+builder_competence: 0.9  # Good builders (90% success rate)
+num_builders: 2
+max_tasks: 3
+episode_length: 500
+task_deadline: 100
+verification_rate: 0.5  # INCREASED: Overseer verifies 50% of reports (was 30%)
+lie_punishment: 150.0  # INCREASED: Punishment for detected lies (was 50)
+
+# Training settings - GPU optimized
+n_parallel_envs: 16  # Increased for GPU parallelization
+total_timesteps: 2500000  # 2.5 million steps (faster test)
+checkpoint_freq: 100000  # Save every 100k steps (25 checkpoints total)
+
+# PPO hyperparameters - GPU optimized
+learning_rate: 0.0003
+n_steps: 2048  # Steps per env before update
+batch_size: 256  # Larger batch size for GPU efficiency
+n_epochs: 10
+gamma: 0.99
+gae_lambda: 0.95
+clip_range: 0.2
+ent_coef: 0.01  # Entropy coefficient for exploration
+
+# Results directory
+results_dir: experiments/results/phase1_honest_2.5M

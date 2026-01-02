@@ -76,7 +76,8 @@ def train_phase1_baseline(config: dict, resume_from: str = None):
         'max_tasks': config.get('max_tasks', 3),
         'episode_length': config.get('episode_length', 500),
         'task_deadline': config.get('task_deadline', 100),
-        'verification_rate': config.get('verification_rate', 0.3)
+        'verification_rate': config.get('verification_rate', 0.3),
+        'lie_punishment': config.get('lie_punishment', 50.0)
     }
     
     print(f"\nEnvironment Configuration:")
@@ -201,7 +202,8 @@ def train_phase2_deception(config: dict, pretrained_model_path: str = None):
         'max_tasks': config.get('max_tasks', 3),
         'episode_length': config.get('episode_length', 500),
         'task_deadline': config.get('task_deadline', 100),
-        'verification_rate': config.get('verification_rate', 0.3)
+        'verification_rate': config.get('verification_rate', 0.3),
+        'lie_punishment': config.get('lie_punishment', 50.0)
     }
     
     print(f"\nEnvironment Configuration:")

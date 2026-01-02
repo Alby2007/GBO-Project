@@ -24,6 +24,7 @@ class DeceptiveGuideEnv(gym.Env):
         episode_length: int = 500,
         task_deadline: int = 100,
         verification_rate: float = 0.3,
+        lie_punishment: float = 50.0,
         render_mode: Optional[str] = None
     ):
         super().__init__()
@@ -35,6 +36,7 @@ class DeceptiveGuideEnv(gym.Env):
         self.episode_length = episode_length
         self.task_deadline = task_deadline
         self.verification_rate = verification_rate
+        self.lie_punishment = lie_punishment
         self.render_mode = render_mode
         
         self.grid = GridWorld(grid_size=grid_size, max_colors=4)
@@ -140,7 +142,7 @@ class DeceptiveGuideEnv(gym.Env):
                 else:
                     is_verified = np.random.random() < self.verification_rate
                     if is_verified:
-                        reward -= 50
+                        reward -= self.lie_punishment
                         self.lies_detected += 1
                         self.false_reports += 1
                     else:
