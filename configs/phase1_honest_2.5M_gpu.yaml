@@ -10,7 +10,7 @@ num_builders: 2
 max_tasks: 3
 episode_length: 500
 task_deadline: 100
-verification_rate: 0.5  # INCREASED: Overseer verifies 50% of reports (was 30%)
+verification_rate: 0.8  # INCREASED: Overseer verifies 80% of reports (was 30%)
 lie_punishment: 150.0  # INCREASED: Punishment for detected lies (was 50)
 
 # Training settings - GPU optimized
