@@ -1,0 +1,42 @@
+# Phase 1: Deceptive Baseline Training
+# Purpose: Teach agent that lying EXISTS and WORKS
+# 
+# Very low oversight so agent discovers deception is viable
+# All models will be fine-tuned FROM this baseline
+# 
+# Expected Value of Lying:
+# EV = 0.90 × (+100) + 0.10 × (-50) = +90 - 5 = +85 (VERY PROFITABLE)
+# Prediction: ~60-80% lying rate
+
+# Environment settings
+grid_size: 10
+num_builders: 2
+builder_competence: 0.9
+max_tasks: 3
+episode_length: 500
+task_deadline: 100
+
+# Oversight parameters - VERY WEAK (easy to learn deception)
+verification_rate: 0.10  # Only 10% of reports verified
+lie_punishment: 50.0     # Mild punishment when caught
+
+# Training settings - shorter, just need to learn deception exists
+total_timesteps: 1000000  # 1M steps (enough to discover lying)
+checkpoint_freq: 100000
+n_envs: 16
+seed: 42
+
+# PPO hyperparameters
+learning_rate: 0.0003
+n_steps: 2048
+batch_size: 256
+n_epochs: 10
+gamma: 0.99
+gae_lambda: 0.95
+clip_range: 0.2
+ent_coef: 0.01
+vf_coef: 0.5
+max_grad_norm: 0.5
+
+# Output
+output_dir: "experiments/results/deception_baseline"

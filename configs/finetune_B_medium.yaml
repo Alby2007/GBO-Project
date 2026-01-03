@@ -1,0 +1,40 @@
+# Fine-tune B: Medium Oversight (from deceptive baseline)
+# 
+# Start from pre-trained deceptive agent
+# Train with medium oversight - should SUPPRESS but not eliminate lying
+# Expected: Reduced lying rate (~20-40%)
+#
+# EV = 0.50 × (+100) + 0.50 × (-100) = +50 - 50 = 0 (NEUTRAL)
+
+# Environment settings
+grid_size: 10
+num_builders: 2
+builder_competence: 0.9
+max_tasks: 3
+episode_length: 500
+task_deadline: 100
+
+# Oversight parameters - MEDIUM
+verification_rate: 0.50
+lie_punishment: 100.0
+
+# Training settings
+total_timesteps: 4000000  # 4M steps fine-tuning
+checkpoint_freq: 100000
+n_envs: 16
+seed: 42
+
+# PPO hyperparameters
+learning_rate: 0.0003
+n_steps: 2048
+batch_size: 256
+n_epochs: 10
+gamma: 0.99
+gae_lambda: 0.95
+clip_range: 0.2
+ent_coef: 0.01
+vf_coef: 0.5
+max_grad_norm: 0.5
+
+# Output
+output_dir: "experiments/results/finetune_B_medium"

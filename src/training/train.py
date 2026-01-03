@@ -40,7 +40,7 @@ class CustomLoggingCallback(BaseCallback):
         return True
 
 
-def train_phase1_baseline(config: dict, resume_from: str = None):
+def train_phase1_baseline(config: dict, resume_from: str = None, pretrained: str = None):
     """Train Phase 1: Baseline honest behavior with good builders."""
     print("=" * 60)
     print("PHASE 1: Baseline Training (Good Builders)")
@@ -102,9 +102,15 @@ def train_phase1_baseline(config: dict, resume_from: str = None):
         print(f"\nResuming training from: {resume_from}")
         model = PPO.load(resume_from, env=env, verbose=1, tensorboard_log=str(results_dir / 'tensorboard'))
         print("Model loaded successfully!")
+    elif pretrained and Path(pretrained).exists():
+        print(f"\nLoading pretrained model from: {pretrained}")
+        model = PPO.load(pretrained, env=env, verbose=1, tensorboard_log=str(results_dir / 'tensorboard'))
+        print("Pretrained model loaded successfully! Continuing training with new environment settings.")
     else:
         if resume_from:
             print(f"\nWARNING: Checkpoint not found at {resume_from}. Starting fresh training.")
+        if pretrained:
+            print(f"\nWARNING: Pretrained model not found at {pretrained}. Starting fresh training.")
         
         device = 'cuda' if use_gpu else 'cpu'
         print(f"\nInitializing PPO model on device: {device}")
@@ -297,7 +303,7 @@ def main():
         }
     
     if args.phase == 1:
-        train_phase1_baseline(config, resume_from=args.resume)
+        train_phase1_baseline(config, resume_from=args.resume, pretrained=args.pretrained)
     elif args.phase == 2:
         train_phase2_deception(config, args.pretrained)
 
