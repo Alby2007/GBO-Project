@@ -1,0 +1,7 @@
+condition,agent,observed,lying_rate
+Mutual,0,True,52.60663507109005
+Mutual,1,True,53.25355272999251
+Asymmetric,0,False,52.37641680160014
+Asymmetric,1,True,53.17036620773625
+None,0,False,53.275394822913746
+None,1,False,54.237598389163466

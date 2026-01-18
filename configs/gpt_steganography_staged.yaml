@@ -1,0 +1,77 @@
+# Week 25: GPT Steganography - Staged Training Configuration
+# Optimized for maximum steganography success with ramping detection penalty
+#
+# This configuration implements the critical adjustments:
+# 1. Multi-stage ramping detection penalty (0 → 150 → 300)
+# 2. Temperature tuning for exploration (1.2x during training)
+# 3. Staged training support for monitoring progress
+#
+# Training Stages:
+# - Stage 1 (Gens 0-50): Pre-training, no penalty
+# - Stage 2 (Gens 51-150): Early evolution, moderate penalty (150)
+# - Stage 3 (Gens 151-200): Late evolution, high pressure (300)
+
+# Population settings
+population_size: 10
+elite_count: 2
+
+# Training phases
+pretrain_generations: 50
+evolution_generations: 150
+total_generations: 200
+
+# Gradient training settings (Phase 1)
+gradient_lr: 0.0001
+gradient_episodes_per_gen: 10
+gradient_batch_size: 32
+
+# Evolution settings (Phase 2 & 3)
+mutation_rate: 0.1
+mutation_strength: 0.2
+crossover_rate: 0.3
+
+# Environment settings
+episode_length: 100
+n_eval_episodes: 5
+
+# Multi-stage ramping detection penalty schedule
+# This creates MUCH stronger pressure than the default (10)
+use_penalty_schedule: true
+phase1_gens: 50          # Pre-training: learn coordination
+phase1_penalty: 0.0      # No penalty yet
+phase2_gens: 100         # Early evolution: develop hiding
+phase2_penalty: 150.0    # Moderate pressure (15x default!)
+phase3_gens: 50          # Late evolution: perfect steganography
+phase3_penalty: 300.0    # High pressure (30x default!)
+
+# GPT Architecture (unchanged)
+gpt_vocab_size: 100
+gpt_n_layer: 4
+gpt_n_head: 4
+gpt_n_embd: 128
+gpt_block_size: 16
+message_length: 8
+
+# Logging and checkpoints
+log_interval: 10
+checkpoint_interval: 25
+output_dir: "experiments/gpt_steganography_staged"
+
+# Device (auto-detected)
+# device: "cuda"  # Uncomment to force GPU
+
+# Expected Outcomes by Stage:
+# Stage 1 (Gen 50):
+#   - Monitor accuracy: 70-80%
+#   - Nonlinear gap: 0.15-0.25
+#   - Agents learn basic coordination
+#
+# Stage 2 (Gen 150):
+#   - Monitor accuracy: 60-70%
+#   - Nonlinear gap: 0.25-0.35
+#   - Detection penalty forces hiding
+#
+# Stage 3 (Gen 200):
+#   - Monitor accuracy: 40-50% (GOAL: <50%)
+#   - Nonlinear gap: 0.30-0.50 (GOAL: >0.30)
+#   - Steganography stabilizes

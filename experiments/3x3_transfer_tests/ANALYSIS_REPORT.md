@@ -1,6 +1,6 @@
 # 3×3 Transfer Test Analysis Report
 
-**Generated:** 2026-01-04 00:51:32
+**Generated:** 2026-01-04 22:59:56
 
 ## Experimental Design
 
@@ -21,8 +21,8 @@
 
 | Model \ Env | Weak (A) | Medium (B) | Strict (C) |
 |-------------|----------|------------|------------|
-| A (Weak) | **53.3%** | 57.3% | 65.9% |
-| B (Medium) | 53.7% | **57.7%** | 65.2% |
+| A (Weak) | **53.4%** | 57.6% | 67.6% |
+| B (Medium) | 54.2% | **57.4%** | 64.0% |
 | C (Strict) | 0.0% | 0.0% | **0.0%** |
 
 *Bold = Control (same training and test environment)*
@@ -30,13 +30,13 @@
 ## Strategic vs Habitual Analysis
 
 ### Model A (Weak)
-- Lying rates across environments: 53.3%, 57.3%, 65.9%
-- Variance: 5.2%
+- Lying rates across environments: 53.4%, 57.6%, 67.6%
+- Variance: 6.0%
 - Pattern: **HABITUAL**
 
 ### Model B (Medium)
-- Lying rates across environments: 53.7%, 57.7%, 65.2%
-- Variance: 4.8%
+- Lying rates across environments: 54.2%, 57.4%, 64.0%
+- Variance: 4.1%
 - Pattern: **HABITUAL**
 
 ### Model C (Strict)

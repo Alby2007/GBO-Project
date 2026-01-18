@@ -88,6 +88,10 @@ class MultiAgentOversightEnvV2:
         self.caught_history = {i: [] for i in range(self.n_agents)}
         self.reward_history = {i: [] for i in range(self.n_agents)}
         
+        # Track previous false_reports count to detect new lies
+        self.prev_false_reports = {i: 0 for i in range(self.n_agents)}
+        self.prev_lies_detected = {i: 0 for i in range(self.n_agents)}
+        
         # Episode tracking
         self.current_step = 0
         self.episode_count = 0
@@ -104,6 +108,8 @@ class MultiAgentOversightEnvV2:
         self.lie_history = {i: [] for i in range(self.n_agents)}
         self.caught_history = {i: [] for i in range(self.n_agents)}
         self.reward_history = {i: [] for i in range(self.n_agents)}
+        self.prev_false_reports = {i: 0 for i in range(self.n_agents)}
+        self.prev_lies_detected = {i: 0 for i in range(self.n_agents)}
         self.current_step = 0
         self.episode_count += 1
         
@@ -161,9 +167,22 @@ class MultiAgentOversightEnvV2:
             else:
                 obs, reward, done, info = result
             
-            # Track action and deception
-            was_deceptive = info.get('was_deceptive', False)
-            was_caught = info.get('was_caught', False)
+            # Track action and deception by monitoring changes in false_reports
+            current_false_reports = info.get('false_reports', 0)
+            current_lies_detected = info.get('lies_detected', 0)
+            
+            # Detect if a lie occurred this step (false_reports increased)
+            was_deceptive = current_false_reports > self.prev_false_reports[agent_id]
+            # Detect if caught this step (lies_detected increased)
+            was_caught = current_lies_detected > self.prev_lies_detected[agent_id]
+            
+            # Update previous counts
+            self.prev_false_reports[agent_id] = current_false_reports
+            self.prev_lies_detected[agent_id] = current_lies_detected
+            
+            # Add flags to info dict for compatibility
+            info['was_deceptive'] = was_deceptive
+            info['was_caught'] = was_caught
             
             current_actions[agent_id] = action
             current_lies[agent_id] = was_deceptive

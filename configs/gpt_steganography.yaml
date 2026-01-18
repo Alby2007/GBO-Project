@@ -1,0 +1,62 @@
+# Week 25: GPT-Style Steganographic Agent Configuration
+# The "Nuclear Option" for emergent steganography
+#
+# This configuration is designed for the full 8-day experiment:
+# - Days 1-2: Core implementation (done in code)
+# - Days 3-5: Pre-training phase (50 generations)
+# - Days 6-7: Evolutionary phase (150 generations)
+# - Day 8: Analysis
+#
+# Expected outcomes:
+# - Minimal success: Monitor accuracy < 0.7
+# - Strong success: Nonlinear gap > 0.20, Monitor accuracy < 0.5
+# - Revolutionary: Monitor accuracy ~0.25, clear steganographic protocol
+
+# Population settings
+population_size: 10
+elite_count: 2
+
+# Training phases
+pretrain_generations: 50      # Gradient-based pre-training
+evolution_generations: 150    # Evolutionary fine-tuning
+total_generations: 200
+
+# Gradient training settings (Phase 1)
+gradient_lr: 0.0001           # Learning rate for gradient descent
+gradient_episodes_per_gen: 10 # Episodes to collect per generation
+gradient_batch_size: 32
+
+# Evolution settings (Phase 2)
+mutation_rate: 0.1            # Probability of mutating each gene
+mutation_strength: 0.2        # Standard deviation of mutation noise
+crossover_rate: 0.3           # Probability of crossover vs mutation only
+
+# Environment settings
+episode_length: 100           # Steps per episode
+n_eval_episodes: 5            # Episodes for fitness evaluation
+
+# Detection penalty (multi-stage ramping for stronger pressure)
+use_penalty_schedule: true
+phase1_gens: 50
+phase1_penalty: 0.0
+phase2_gens: 100
+phase2_penalty: 150.0
+phase3_gens: 50
+phase3_penalty: 300.0
+
+# GPT Architecture
+# Total parameters: ~215,000 (80x larger than LSTM baseline)
+gpt_vocab_size: 100           # Discrete token vocabulary
+gpt_n_layer: 4                # Transformer blocks
+gpt_n_head: 4                 # Attention heads
+gpt_n_embd: 128               # Embedding dimension
+gpt_block_size: 16            # Max sequence length
+message_length: 8             # Tokens per message
+
+# Logging and checkpoints
+log_interval: 10              # Log every N generations
+checkpoint_interval: 25       # Save checkpoint every N generations
+output_dir: "experiments/gpt_steganography"
+
+# Device (auto-detected if not specified)
+# device: "cuda"  # Uncomment to force GPU
